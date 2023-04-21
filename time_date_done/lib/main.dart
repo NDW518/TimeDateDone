@@ -1,36 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/colors.dart';
+import './pages/calculator_page.dart';
+import './pages/calendar_page.dart';
+import './pages/reminders_page.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(const CalendarScreen());
+  runApp(const MainApp());
 }
 
-class CalendarScreen extends StatefulWidget {
-  const CalendarScreen({super.key});
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
 
   @override
-  State<CalendarScreen> createState() => _CalendarScreenState();
+  State<MainApp> createState() => _MainApp();
 }
 
-class _CalendarScreenState extends State<CalendarScreen> {
+class _MainApp extends State<MainApp> {
   int currentIndex = 1;
 
   final screens = [
-      Center(child: Text('Time Calculator', style: TextStyle(fontSize: 60))),
-      Center(child: Text('Calendar', style: TextStyle(fontSize: 60))),    
-      Center(child: Text('Reminders', style: TextStyle(fontSize: 60))),
+      CalculatorPage(),
+      CalendarPage(),
+      RemindersPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(  // Bar Across the Top of the Screen
+       /* appBar: AppBar(  // Bar Across the Top of the Screen
           backgroundColor: Color.fromRGBO(57, 142, 172, 1),
-          title: const Text('THIS IS THE CALENDAR SCREEN'),
-        ),
+          title: const Text('TimeDateDone'),
+        ), */
       
-      body: screens[currentIndex],
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
