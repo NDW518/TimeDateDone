@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class CalculatorPage extends StatefulWidget {
@@ -15,8 +16,19 @@ class _CalculatorPageState extends State<CalculatorPage> {
     super.initState();
   }
 
+  bool pastCalc = false;
+  bool futureCalc = false;
+  bool dayCalc = false;
+  bool weekCalc = false;
+  bool monthCalc = false;
+  bool yearCalc = false;
+
+
   int _wasItwillItRadioValue = -1;
   int _timeScaleRadioValue = -1;
+
+  String inputTimeAmount = '';
+  int timeAmount = 0;
 
   void _handleRadioValueChange1(int? value) {
     setState(() {
@@ -24,10 +36,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
       switch (_wasItwillItRadioValue) {
         case 0:
-          // Was It = date.subtract
+          pastCalc = true;
           break;
         case 1:
-          // Will It Be = date.add
+          futureCalc = true;
           break;
       }
     });
@@ -39,16 +51,16 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
       switch (_timeScaleRadioValue) {
         case 0:
-          // Days = const Duration(hours: INPUT)
+          dayCalc = true;
           break;
         case 1:
-          // Weeks = const Duration(weeks: INPUT)
+          weekCalc = true;
           break;
         case 2:
-          // Months = const Duration(months: INPUT)
+          monthCalc = true;
           break;
         case 3:
-          // Years = const Duration(years: INPUT)
+          yearCalc = true;
           break;
       }
     });
@@ -109,10 +121,26 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      TextField(
+                        decoration: InputDecoration(
+                            labelText: "Enter a Number",
+                            constraints: BoxConstraints(
+                                minWidth: 90.0, maxWidth: 120.0)),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        onChanged: (value){
+                          setState(() {
+                            inputTimeAmount = value;
+                            timeAmount = int.parse(inputTimeAmount);
+                            print(timeAmount);
+                          });
+                        }
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // CODE FOR NUMBER INPUT
                           Radio(
                             value: 0,
                             groupValue: _timeScaleRadioValue,
@@ -174,9 +202,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0,
                               )),
-                          // INPUT CODE FOR DATE
                         ],
-                      )
+                      ),
                     ],
                   ),
                   TextField(
@@ -185,7 +212,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       decoration: const InputDecoration(
                         icon: Icon(Icons.calendar_today),
                         labelText: "Enter Date",
-                        constraints: BoxConstraints(minWidth: 90.0, maxWidth: 120.0),
+                        constraints:
+                            BoxConstraints(minWidth: 90.0, maxWidth: 120.0),
                       ),
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
@@ -204,6 +232,26 @@ class _CalculatorPageState extends State<CalculatorPage> {
                           print("Date is not selected");
                         }
                       }),
+                
+                  Divider(),
+
+                  ElevatedButton(
+                    onPressed: (){
+                      bool wasItWillIt;
+                      bool timeScale;
+                      dateinput;
+
+                      if (wasItWillIt = pastCalc && timeScale = dayCalc){
+                        
+                      }
+                      
+                    },
+                    child: const Text('Calculate Date'),
+                  )
+                
+                
+                
+                
                 ],
               ),
             )));
