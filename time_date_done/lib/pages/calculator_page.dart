@@ -10,6 +10,7 @@ class CalculatorPage extends StatefulWidget {
 
 class _CalculatorPageState extends State<CalculatorPage> {
   TextEditingController dateinput = TextEditingController();
+  TextEditingController resultOutput = TextEditingController();
 
   @override
   void initState() {
@@ -40,9 +41,11 @@ class _CalculatorPageState extends State<CalculatorPage> {
       switch (_wasItwillItRadioValue) {
         case 0:
           pastCalc = true;
+          futureCalc = false;
           break;
         case 1:
           futureCalc = true;
+          pastCalc = false;
           break;
       }
     });
@@ -55,15 +58,27 @@ class _CalculatorPageState extends State<CalculatorPage> {
       switch (_timeScaleRadioValue) {
         case 0:
           dayCalc = true;
+          weekCalc = false;
+          monthCalc = false;
+          yearCalc = false;          
           break;
         case 1:
+          dayCalc = false;
           weekCalc = true;
+          monthCalc = false;
+          yearCalc = false;       
           break;
         case 2:
+          dayCalc = false;
+          weekCalc = false;
           monthCalc = true;
+          yearCalc = false;       
           break;
         case 3:
-          yearCalc = true;
+          dayCalc = false;
+          weekCalc = false;
+          monthCalc = false;
+          yearCalc = true;       
           break;
       }
     });
@@ -73,42 +88,42 @@ class _CalculatorPageState extends State<CalculatorPage> {
     DateTime result_to_return = DateTime.now();
 
       if (pastCalc && dayCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).subtract(days: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').subtract(days: timeAmount).dateTime;
         result_to_return = result;
       }
 
       if (pastCalc && weekCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).subtract(weeks: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').subtract(weeks: timeAmount).dateTime;
         result_to_return = result;
       }
 
       if (pastCalc && monthCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).subtract(months: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').subtract(months: timeAmount).dateTime;
         result_to_return = result;
       }
 
       if (pastCalc && yearCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).subtract(years: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').subtract(years: timeAmount).dateTime;
         result_to_return = result;
       }
 
       if (futureCalc && dayCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).add(days: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').add(days: timeAmount).dateTime;
         result_to_return = result;
       }
 
       if (futureCalc && weekCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).add(weeks: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').add(weeks: timeAmount).dateTime;
         result_to_return = result;
       }
 
       if (futureCalc && monthCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).add(months: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').add(months: timeAmount).dateTime;
         result_to_return = result;
       }
 
       if (futureCalc && yearCalc){
-        final result = Jiffy.parse(functionInputDate.toString()).add(years: timeAmount).dateTime;
+        final result = Jiffy.parse(functionInputDate.toString(), pattern: 'MM-dd-yyyy').add(years: timeAmount).dateTime;
         result_to_return = result;
       }
 
@@ -171,8 +186,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextField(
+                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                            labelText: "Enter a Number",
+                            label: const Center(child: Text("Enter a Number")),
                             constraints: BoxConstraints(
                                 minWidth: 90.0, maxWidth: 120.0)),
                         keyboardType: TextInputType.number,
@@ -275,7 +291,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                         if (pickedDate != null) {
                           setState(() {
                             dateinput.text =
-                                DateFormat('yyyy-mm-dd').format(pickedDate);
+                                DateFormat('MM-dd-yyyy').format(pickedDate);
                                 print(dateinput.text);
                           });
                         } else {
@@ -287,9 +303,20 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
                   ElevatedButton(
                     onPressed: (){
-                      print(calculateTime(dateinput.text));
+                      resultOutput.text = DateFormat('MM-dd-yyyy').format(calculateTime(dateinput.text));
                     },
                     child: const Text('Calculate Date'),
+                  ),
+
+                  TextField(
+                    controller: resultOutput,
+                    readOnly: true,
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                      label: const Center(child: Text("It is/was")),
+                      labelStyle: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+                      constraints: BoxConstraints(minWidth: 50.0, maxWidth: 100.0),
+                    ),
                   )
                 ],
               ),
