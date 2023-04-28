@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 
 class CalculatorPage extends StatefulWidget {
   @override
@@ -26,6 +27,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
   int _wasItwillItRadioValue = -1;
   int _timeScaleRadioValue = -1;
+
+  // DateTime pickedDate = DateTime.now(); 
 
   String inputTimeAmount = '';
   int timeAmount = 0;
@@ -64,6 +67,52 @@ class _CalculatorPageState extends State<CalculatorPage> {
           break;
       }
     });
+  }
+
+  DateTime calculateTime(functionInputDate){
+    DateTime result_to_return = DateTime.now();
+
+      if (pastCalc && dayCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).subtract(days: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      if (pastCalc && weekCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).subtract(weeks: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      if (pastCalc && monthCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).subtract(months: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      if (pastCalc && yearCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).subtract(years: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      if (futureCalc && dayCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).add(days: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      if (futureCalc && weekCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).add(weeks: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      if (futureCalc && monthCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).add(months: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      if (futureCalc && yearCalc){
+        final result = Jiffy.parse(functionInputDate.toString()).add(years: timeAmount).dateTime;
+        result_to_return = result;
+      }
+
+      return result_to_return;
   }
 
   @override
@@ -213,10 +262,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
                         icon: Icon(Icons.calendar_today),
                         labelText: "Enter Date",
                         constraints:
-                            BoxConstraints(minWidth: 90.0, maxWidth: 120.0),
+                            BoxConstraints(minWidth: 100.0, maxWidth: 120.0),
                       ),
                       onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
+                        final pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2000),
@@ -226,7 +275,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
                         if (pickedDate != null) {
                           setState(() {
                             dateinput.text =
-                                DateFormat('MM-dd-yyyy').format(pickedDate);
+                                DateFormat('yyyy-mm-dd').format(pickedDate);
+                                print(dateinput.text);
                           });
                         } else {
                           print("Date is not selected");
@@ -237,21 +287,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
                   ElevatedButton(
                     onPressed: (){
-                      bool wasItWillIt;
-                      bool timeScale;
-                      dateinput;
-
-                      if (wasItWillIt = pastCalc && timeScale = dayCalc){
-                        
-                      }
-                      
+                      print(calculateTime(dateinput.text));
                     },
                     child: const Text('Calculate Date'),
                   )
-                
-                
-                
-                
                 ],
               ),
             )));

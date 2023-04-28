@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.1
+  jiffy: ^6.1.0
   table_calendar: ^3.0.9
 
 dev_dependencies:
