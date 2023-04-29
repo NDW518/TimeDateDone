@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/material/colors.dart';
 import './pages/calculator_page.dart';
 import './pages/calendar_page.dart';
-import './pages/reminders_page.dart';
+// import './pages/reminders_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class _MainApp extends State<MainApp> {
   final screens = [
       CalculatorPage(),
       CalendarPage(),
-      RemindersPage(),
+      // RemindersPage(),
   ];
 
   @override
@@ -56,10 +56,10 @@ class _MainApp extends State<MainApp> {
             label: "Calendar"
           ),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: "Reminders"
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.list_alt),
+          //   label: "Reminders"
+          // ),
         ],
 
         onTap: (index) => setState(() => currentIndex = index),

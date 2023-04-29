@@ -145,6 +145,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
             appBar: AppBar(
               backgroundColor: Color.fromRGBO(57, 142, 172, 1),
               title: const Text('TimeDateDone Time Calculator'),
+              centerTitle: true,
             ),
             body: Container(
               child: Column(
@@ -199,7 +200,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                           setState(() {
                             inputTimeAmount = value;
                             timeAmount = int.parse(inputTimeAmount);
-                            print(timeAmount);
                           });
                         }
                       ),
@@ -292,7 +292,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                           setState(() {
                             dateinput.text =
                                 DateFormat('MM-dd-yyyy').format(pickedDate);
-                                print(dateinput.text);
                           });
                         } else {
                           print("Date is not selected");
@@ -306,6 +305,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       resultOutput.text = DateFormat('MM-dd-yyyy').format(calculateTime(dateinput.text));
                     },
                     child: const Text('Calculate Date'),
+                    style: ElevatedButton.styleFrom(backgroundColor: Color.fromRGBO(57, 142, 172, 1))
                   ),
 
                   TextField(

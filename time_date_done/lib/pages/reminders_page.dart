@@ -11,6 +11,7 @@ class _RemindersPageState extends State<RemindersPage> {
     appBar: AppBar(
       backgroundColor: Color.fromRGBO(57, 142, 172, 1),
       title: Text('TimeDateDone Reminders'),
+      centerTitle: true,
     ),
 
     body: Center(child: Text('Reminders', style: TextStyle(fontSize: 60))) 
